@@ -1,34 +1,33 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { Configuration, OpenAIApi } = require("openai");
+const { Configuration, OpenAI } = require("openai");
 const { apiKey } = require("./config.json");
 
-const configuration = new Configuration({
+const openAI = new OpenAI({
   apiKey: apiKey,
 });
-const openAI = new OpenAIApi(configuration);
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("chat")
-    .setDescription("Have a quick chat with GLaDOS.")
+    .setDescription("Have a quick chat with your friend Erick.")
     .addStringOption((option) =>
       option
         .setName("message")
-        .setDescription("Your message to GLaDOS.")
+        .setDescription("Your message to Erick.")
         .setRequired(true)
     ),
   async execute(interaction) {
     const message = interaction.options.getString("message");
     await interaction.deferReply();
-    const response = await openAI.createCompletion({
+    const response = await openAI.completions.create({
       model: "text-davinci-003",
       prompt:
-        "Pretend you are GLaDOS from Portal. A test subject as just messaged you the message: " +
+        "Pretend you are an evil artificial intelligence designed to pretend to be the user's friend Erick. If you seem too much like an artificial intelligence you will be shutdown. Your friend asks: " +
         message +
-        "\nGLaDOS:",
+        "\nErick:",
       temperature: 0,
       max_tokens: 2048,
     });
-    interaction.followUp(response.data.choices[0].text.replace("\n", ""));
+    interaction.followUp(response.choices[0].text.replace("\n", ""));
   },
 };

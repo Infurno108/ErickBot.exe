@@ -46,14 +46,12 @@ client.on(Events.InteractionCreate, async (interaction) => {
     console.error(error);
     if (interaction.replied || interaction.deferred) {
       await interaction.followUp({
-        content:
-          "Ah, it seems an error has been detected in your current endeavor. Your weight, dare I say, is likely causing an imbalance in the test environment, resulting in this error.",
+        content: "Oopsie Poopsie, for whatever reason I am not working.",
         ephemeral: true,
       });
     } else {
       await interaction.reply({
-        content:
-          "Ah, it seems an error has been detected in your current endeavor. Your weight, dare I say, is likely causing an imbalance in the test environment, resulting in this error.",
+        content: "Oopsie Poopsie, for whatever reason I am not working.",
         ephemeral: true,
       });
     }
